@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>折线图</title>
+	<script src="/static/js/echarts.min.js"></script>
+
+    <div id="nengkai_yewu_graph" style="width: 600px;height:400px;"></div>
+
+	<script type="text/javascript">
+		var nengkai_yewu_chart = echarts.init(document.getElementById('nengkai_yewu_graph'));
+		var nengkai_yewu_option = {
+			title: {
+				text: 'echartsdemo',
+				x: 'right'
+			},
+			toolbox: {
+				show: false,
+				feature: {
+					dataZoom: {
+						yAxisIndex: 'none'
+					},
+					restore: {},
+					saveAsImage: {}
+				}
+			},
+			tooltip: {},
+			legend: {
+				x: 'left',
+				data: ['2018-01-12', '2018-01-11']
+			},
+			xAxis: {
+			    type: 'category',
+				data: ['09:05', '09:10', '09:15', '09:20']
+			},
+			yAxis: {
+			    type: 'value'
+            },
+			series: [
+                {
+                    name: '2018-01-12',
+                    type: 'line',
+                    data: [15, 18, 14, 11]
+                },
+                {
+                    name: '2018-01-11',
+                    type: 'line',
+                    data: [12, 13, 18, 10]
+                }
+            ]
+		};
+
+		nengkai_yewu_chart.setOption(nengkai_yewu_option);
+
+
+	</script>>
+</head>
+<body>
+
+</body>
+</html>
