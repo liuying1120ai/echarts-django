@@ -4,12 +4,12 @@
 	<meta charset="UTF-8">
 	<title>折线图</title>
 	<script src="/static/js/echarts.min.js"></script>
-
-    <div id="nengkai_yewu_graph" style="width: 600px;height:400px;"></div>
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+	<div id="line_charts" style="width: 600px;height:400px;"></div>
 
 	<script type="text/javascript">
-		var nengkai_yewu_chart = echarts.init(document.getElementById('nengkai_yewu_graph'));
-		var nengkai_yewu_option = {
+		var line_chart = echarts.init(document.getElementById('line_charts'));
+		var line_option = {
 			title: {
 				text: 'echartsdemo',
 				x: 'right'
@@ -27,33 +27,49 @@
 			tooltip: {},
 			legend: {
 				x: 'left',
-				data: ['2018-01-12', '2018-01-11']
+				data: []
 			},
 			xAxis: {
-			    type: 'category',
-				data: ['09:05', '09:10', '09:15', '09:20']
+				type: 'category',
+				data: []
 			},
 			yAxis: {
-			    type: 'value'
-            },
+				type: 'value'
+			},
 			series: [
-                {
-                    name: '2018-01-12',
-                    type: 'line',
-                    data: [15, 18, 14, 11]
-                },
-                {
-                    name: '2018-01-11',
-                    type: 'line',
-                    data: [12, 13, 18, 10]
-                }
-            ]
+				{
+					name: '',
+					type: 'line',
+					data: []
+				},
+			]
 		};
 
-		nengkai_yewu_chart.setOption(nengkai_yewu_option);
+		line_chart.showLoading();
 
+		function line_charts_lc(){
+			$.ajax({
+				url: '/linecharts/',
+				type: 'post',
+				dataType: "json",
+                data: {},
+				success: function(response){
+					line_option.legend.data = response.dates;
+					line_option.xAxis.data = response.xtimes;
+					line_option.series[0].name = response.dates[0];
+					line_option.series[0].data = response.values;
 
-	</script>>
+					line_chart.setOption(line_option);
+
+					line_chart.hideLoading();
+				}
+			})
+		}
+
+		line_charts_lc();
+		window.setInterval("line_charts_lc()", 6000);
+
+	</script>
 </head>
 <body>
 
